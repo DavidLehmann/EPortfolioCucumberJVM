@@ -4,12 +4,12 @@
     1. [Cucumber](#1.1Cucumber)
     2. [Selenium](#1.2Selenium)
  2. [Installation Tutorial](#2InstallationTutorial)
-    1. [Cucumber-JVM](2.1CucumberJVM)
-    2. [Selenium Web Driver](2.2SeleniumWebDriver)
-    3. [Cucumber Eclipse Plugin](2.3CucumberEclipsePlugin)
- 3. [Gherkin](3Gherkin)
-    1. [General Information](3.1GeneralInformation)
-    2. [Syntax](3.2Syntax)
+    1. [Cucumber-JVM](#2.1CucumberJVM)
+    2. [Selenium Web Driver](#2.2SeleniumWebDriver)
+    3. [Cucumber Eclipse Plugin](#2.3CucumberEclipsePlugin)
+ 3. [Gherkin](#3Gherkin)
+    1. [General Information](#3.1GeneralInformation)
+    2. [Syntax](#3.2Syntax)
 
 ## <a name="1GeneralInformation"></a>1 General Information
 

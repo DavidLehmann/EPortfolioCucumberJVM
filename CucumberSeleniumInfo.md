@@ -95,3 +95,22 @@ Right-Click on the project you want to add the cucumber jars. Then select "Build
 Open the the tab "Libraries" in the window that opened. Click on the button "Add External JARs.."
 and navigate to the downloaded files and add them. After you confirm the .jars should appear in 
 the middle window and you can click on "Apply" and close the window.
+
+### 2.2 Selenium Web Driver
+The installation of the Selenium Web Driver is similar to the second installation method of Cucumber JVM. First of all you will have to download the necessary files which you can get from [http://www.seleniumhq.org/download/](http://www.seleniumhq.org/download/). 
+Screenshot
+The files are downloaded as a .zip compressed file. After you unzip them you see that it contains the file client-combined-3.6.0.jar, a lib folder containing .jar files and some additional files. To setup the Selenium Web Driver in your project you now have to add the client-combined-3.6.0.jar and all the .jar files from the lib folder into the build path like before (see 2.1).
+Lastly, you have to download a browser driver for the browser you want selenium to operate on. The example projects of this e-portfolio use the “geckodriver” for Firefox which you can download [here](https://github.com/mozilla/geckodriver/releases). Of course there are other browser drivers, for example “chromedriver”, but I won’t cover them here for simplicity reasons and because they should function similar to the “geckodriver” and the shown procedures should apply to them too.
+After you downloaded and unzipped the file you will just have to remember the path so you can access the driver from your code. I suggest that you move the “geckodriver.exe” to your project folder, to simplify navigating to the file and finding it.
+Now you can access the driver via a created WebDriver-Object in your Java-Code, like the following listing illustrates.
+```Java
+WebDriver driver = null;
+// Create a new instance of the Firefox driver
+System.setProperty(“webdriver.gecko.driver”,”PATH_TO_GECKODRIVER.EXE”);
+driver = new FirefoxDriver();
+```
+### 2.3 Cucumber Eclipse Plugin (optional)
+The installation of the optional Cucumber Plugin is pretty easy and straightforward if you already installed a plugin via the Eclipse Marketplace. If not this guide should help you installing the plugin. First of all open up Eclipse and hover over “Help” in the upper bar. In the expanding drop-down menu click on “Eclipse Marketplace…”. In the window that opened search for “Cucumber” and the result should look similar to this:
+![Cucumber Plugin Marketplace](https://raw.githubusercontent.com/DavidLehmann/EPortfolioCucumberJVM/master/Pictures/CucumberPluginMarketplace.PNG)
+
+If it does, hit the “Install” button for "Natural 0.7.6" and follow the instructions. After the installation finished you will be prompted to restart Eclipse. After that the plugin should be successfully installed.

@@ -10,6 +10,9 @@
  3. [Gherkin](#3Gherkin)
     1. [General Information](#3.1GeneralInformation)
     2. [Syntax](#3.2Syntax)
+ 4. [Running Tests with Cucumber-JVM and Selenium](#4RunningTests)
+    1. [Project Structure Setup](#4.1ProjectStructureSetup)
+    2. [Running tests](#4.2RunningTests)
 
 ## <a name="1GeneralInformation"></a>1 General Information
 
@@ -41,14 +44,14 @@ specific browser driver (e.g. Geckodriver for Firefox).
 ### <a name="2.1CucumberJVM"></a> 2.1 Cucumber-JVM
 Sadly there is no preconfigured installation that can be downloaded and executed so we 
 have to get the necessary files ourselves. **Important:** Do not confuse the eclipse plugin of
-cucumber you will find when searching for cucumber in the Eclipse Marketplace with the 
-real cucumber! This plugin is handy and enables syntax-highlighting for the gherkin 
-programming language but it’s not mandatory.
-The cucumber functionality is spilt up into multiple modules that are contained in 
-different .jar files. This enables the user to choose the components of cucumber that
+Cucumber you will find when searching for Cucumber in the Eclipse Marketplace with the 
+real Cucumber! This plugin is handy and enables syntax-highlighting for the gherkin 
+programming language but it’s not mandatory to use Cucumber.
+The functionality of Cucumber is spilt up into multiple modules that are contained in 
+different .jar files. This enables the user to choose the components of Cucumber that
 are necessary for the project. The following list of jars/modules contains the jars used
 in the example project of this GitHub repository and which should suffice for most of the
-projects as a basic version of cucumber. Important: Be careful with the versions of the
+projects as a basic version of Cucumber. Important: Be careful with the versions of the
 files and check if they are compatible with each other in both of the integration methods
 because incompatible versions can cause problems/errors. The current recommended versions 
 (Oct 17) are:
@@ -76,14 +79,14 @@ build.
     <dependency>
         <groupId>info.cukes</groupId>
         <artifactId>cucumber-java</artifactId>
-        <version>1.2.4</version>
+        <version>1.2.5</version>
         <scope>test</scope>
     </dependency>
 
     <dependency>
         <groupId>info.cukes</groupId>
         <artifactId>cucumber-junit</artifactId>
-        <version>1.2.4</version>
+        <version>1.2.5</version>
         <scope>test</scope>
     </dependency>
 ```
@@ -174,4 +177,63 @@ Feature: Login
                 | tester   | test     |
 		| Admin    | wrong    |
 ```
+## <a name="4RunningTests"></a> 4 Running Tests with Cucumber-JVM and Selenium
+### <a name="4.1ProjectStructureSetup"></a> 4.1 Project Structure Setup
+Now, after you setup Cucumber-JVM and Selenium in your project and you know the basics about Gherkin and how you write .feature files, you can start to write and run your own tests. I suggest that you create a package in your project for all the test relevant files so everything is structured and test files are separated from your main project code. In this package you can place the .feature files and the classes containing the Step Definitions which will be covered in more detail in a second. If you want even more structure and you have a lot of different Features you can also create a separate folder for .feature files to keep them separate from the implementation and easy accessible. If you choose this method you have to keep in mind that you have to specify the path to the folder for cucumber later on.
+### <a name="4.2RunningTests"></a> 4.2 Running tests
+Before running a test you need to write a .feature file for the test. I’m going to assume that you already know how to do that and that you already wrote one. For the sake of this example I’m going to use the Login-Feature used as an example in the Gherkin section (see 3.2). 
+In order to run the test you have to define a class for running your tests. There are multiple ways to run scenarios with Cucumber-JVM. I’m going to use the JUnit-Framework as a runner. Other options to run the test are for example using the Command Line Interface (CLI) or third party runners within an IDE.
+The runner-class can be created by simply using an empty class that can have any name you want and the annotation “@RunWith(Cucumber.class)” above the class declaration. You also can add other annotations like “@CucumberOptions(…)” where you can specify multiple of the options in  the paranthesis with a comma separated list using arguments from the table seen below.
+![Options Table](https://raw.githubusercontent.com/DavidLehmann/EPortfolioCucumberJVM/master/Pictures/CucumberOptionsTable.png)
 
+Here you can specify the path to the folder containing the .feature files if you didn’t put them in the same package as the runner-class. You will also notice that Eclipse will mark errors if you didn’t specify the necessary import statements for the annotations from the cucumber and junit classes. 
+Now that your runner is and there are no errors in it you can start your test for the first time. To do so you have to open you runner-class in Eclipse. When the file is open you click on the green run button. If you’re prompted with a window how you want to run the file you select to run it as a JUnit-Test Application. If everything works correctly the test should start and you should get a console message similar to this if you specified at least one .feature file and Cucumber found them in the place you specified:
+![Step Definition Suggestion](https://raw.githubusercontent.com/DavidLehmann/EPortfolioCucumberJVM/master/Pictures/CucumberStepSuggestion.PNG)
+
+Here Cucumber is suggesting that you should implement these methods as Step Definitions. Every Step in a Gherkin .feature file can be considered a method invocation and that’s why before cucumber can execute a step it must be told what should happen on the certain steps which is done via the Step Definitions. Additionally to that Cucumber allows you to do setup actions to be performed prior to tests and teardowns afterward with the help of so called Hooks. There are three basic types:
+-“Before”:  runs before a scenario
+-“After”: runs after a scenario
+-“Around”: Assumes control and runs around a scenario
+	With this whole knowledge you now can implement the steps of your defined Feature by copying the suggested methods and placing them into a class. For this purpose I suggest creating a new java-class for every Feature which contains the corresponding Step Definitions for the .feature file. You can name this file like you want to. I named mine “LoginStepDefintions” so I can easily identify what is contained in the files.  After you created the class you can paste the suggested methods in which can be found after the “You can implement missing steps with the snippets below:” message in the console output of your first test run. Once again you will have to add the missing import statements from the cucumber library to get rid of the errors in Eclipse.2
+Finally, you can define a setup and a teardown method with annotated with “@Before” and “@After” if you want to perform some actions before and after the scenario, like for example setting up the Selenium Driver for the test. 
+Now it’s up to you to implement the specific actions that should be performed on the steps you defined in your Feature. To let fail a test or test some condition that can make a test fail or pass you can use the assert-functionalities of JUnit to do so. The following listing shows a part of the implementation of the Step Definitions for the Login-Feature example and should illustrate all of the things mentioned above:
+```Java
+public class LoginStepDefinitions {
+
+	private static WebDriver driver = null;
+
+	@Before
+	public void setup() {
+		System.setProperty("webdriver.gecko.driver", "./geckodriver.exe");
+		driver = new FirefoxDriver();
+	}
+
+	@After
+	public void cleanup() {
+		driver.close();
+	}
+
+	@Given("^User is on Login page$")
+	public void user_is_on_Login_page() throws Throwable {
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.get("http://localhost:8080/CucumberDemo/Login.jsp");
+	}
+
+	@When("^User provides username \"([^\"]*)\" and password \"([^\"]*)\"$")
+	public void user_provides_username_and_password(String arg1, String arg2) throws Throwable {
+		driver.findElement(By.id("usernameID")).sendKeys(arg1);
+		driver.findElement(By.id("passwordID")).sendKeys(arg2);
+		driver.findElement(By.id("loginID")).click();
+	}
+
+	@Then("^User should be successfully logged in as Admin$")
+	public void user_should_be_successfully_logged_in_as_Admin() throws Throwable {
+		String url = driver.getCurrentUrl();
+		if (url.equals("http://localhost:8080/CucumberDemo/TempCalculator.jsp")) {
+			assertEquals("Login failure",driver.findElement(By.id("userLevel")).getText(),"Administrator");
+		} else {
+			fail("Not logged in");
+		}
+	}
+```
+You also can see some basic usage of the Selenium Web Driver, for example how you can find elements on a webpage by supplying their ID to the “driver.findElment(By.id(“id”))” function and pass values to them by using the “sendKeys(value)” method. For further usage of the Selenium Web Driver functionalities and capabilities I suggest searching for the needed functionalities with a search engine because I can’t cover the whole load of functionalities provided by the Web Driver in my e-portfolio and there are enough sources in the Internet where you can find what you need.

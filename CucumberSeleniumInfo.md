@@ -143,8 +143,8 @@ In general Cucumber tests are divided into individual Features represented in se
    - “Given” is used to describe preconditions that have to be met and allows a pre-test setup. 
    - “When” is used to describe user actions that happen during a test
    - “Then” is used to describe results of the actions taken during “When” clauses.
-Lastly, conjunctions of this keywords can be formed with the help of the keywords “And” and “But” which both represent a logical “and” but “But” is used for the negative form
-
+	
+Moreover conjunctions of this keywords can be formed with the help of the keywords “And” and “But” which both represent a logical “and” but “But” is used for the negative form.
 Lastly, to better illustrate the usage of Gherkin, all of the explained topics can be reviewed in the following listing (login.feature of the example project): 
 ```Gherkin
 Feature: Login
@@ -194,7 +194,7 @@ Here Cucumber is suggesting that you should implement these methods as Step Defi
 -“Before”:  runs before a scenario
 -“After”: runs after a scenario
 -“Around”: Assumes control and runs around a scenario
-	With this whole knowledge you now can implement the steps of your defined Feature by copying the suggested methods and placing them into a class. For this purpose I suggest creating a new java-class for every Feature which contains the corresponding Step Definitions for the .feature file. You can name this file like you want to. I named mine “LoginStepDefintions” so I can easily identify what is contained in the files.  After you created the class you can paste the suggested methods in which can be found after the “You can implement missing steps with the snippets below:” message in the console output of your first test run. Once again you will have to add the missing import statements from the cucumber library to get rid of the errors in Eclipse.2
+	With this whole knowledge you now can implement the steps of your defined Feature by copying the suggested methods and placing them into a class. For this purpose I suggest creating a new java-class for every Feature which contains the corresponding Step Definitions for the .feature file. You can name this file like you want to. I named mine “LoginStepDefintions” so I can easily identify what is contained in the files.  After you created the class you can paste the suggested methods in which can be found after the “You can implement missing steps with the snippets below:” message in the console output of your first test run. Once again you will have to add the missing import statements from the cucumber library to get rid of the errors in Eclipse.
 Finally, you can define a setup and a teardown method with annotated with “@Before” and “@After” if you want to perform some actions before and after the scenario, like for example setting up the Selenium Driver for the test. 
 Now it’s up to you to implement the specific actions that should be performed on the steps you defined in your Feature. To let fail a test or test some condition that can make a test fail or pass you can use the assert-functionalities of JUnit to do so. The following listing shows a part of the implementation of the Step Definitions for the Login-Feature example and should illustrate all of the things mentioned above:
 ```Java

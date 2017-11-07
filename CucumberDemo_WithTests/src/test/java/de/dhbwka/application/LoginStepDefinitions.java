@@ -1,4 +1,4 @@
-package de.dhbwka.test;
+package de.dhbwka.application;
 
 import static org.junit.Assert.*;
 

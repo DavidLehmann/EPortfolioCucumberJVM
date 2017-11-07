@@ -1,4 +1,4 @@
-package de.dhbwka.test;
+package de.dhbwka.application;
 
 import java.util.concurrent.TimeUnit;
 import static org.junit.Assert.*;

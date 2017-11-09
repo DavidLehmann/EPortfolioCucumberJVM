@@ -76,19 +76,56 @@ the pom.xml and rebuild the project dependencies. The code snippet shows an exam
 extract from a pom.xml which adds the cucumber-java and cucumber-junit .jar to the project
 build.
 ```XML
-    <dependency>
-        <groupId>info.cukes</groupId>
-        <artifactId>cucumber-java</artifactId>
-        <version>1.2.5</version>
-        <scope>test</scope>
-    </dependency>
-
-    <dependency>
-        <groupId>info.cukes</groupId>
-        <artifactId>cucumber-junit</artifactId>
-        <version>1.2.5</version>
-        <scope>test</scope>
-    </dependency>
+    	
+	<dependency>
+		<groupId>info.cukes</groupId>
+		<artifactId>cucumber-java</artifactId>
+		<version>1.1.5</version>
+		<scope>test</scope>
+	</dependency>
+	<dependency>
+		<groupId>info.cukes</groupId>
+		<artifactId>cucumber-jvm</artifactId>
+		<version>1.1.5</version>
+		<type>pom</type>
+	</dependency>
+	<dependency>
+		<groupId>info.cukes</groupId>
+		<artifactId>cucumber-junit</artifactId>
+		<version>1.1.5</version>
+		<scope>test</scope>
+	</dependency>
+	<dependency>
+		<groupId>net.sourceforge.cobertura</groupId>
+		<artifactId>cobertura</artifactId>
+		<version>2.1.1</version>
+	</dependency>
+	<dependency>
+		<groupId>info.cukes</groupId>
+		<artifactId>cucumber-jvm-deps</artifactId>
+		<version>1.0.5</version>
+	</dependency>
+	<dependency>
+		<groupId>net.masterthought</groupId>
+		<artifactId>cucumber-reporting</artifactId>
+		<version>1.0.0</version>
+	</dependency>
+	<dependency>
+		<groupId>info.cukes</groupId>
+		<artifactId>gherkin</artifactId>
+		<version>2.12.2</version>
+	</dependency>
+	<dependency>
+		<groupId>org.mockito</groupId>
+		<artifactId>mockito-all</artifactId>
+		<version>2.0.2-beta</version>
+	</dependency>
+	<dependency>
+		<groupId>junit</groupId>
+		<artifactId>junit</artifactId>
+		<version>3.8.1</version>
+		<scope>test</scope>
+	</dependency>
 ```
 In the case you don’t use Maven or don’t want to use it in your project you will have to 
 use the second, more complicated method to setup Cucumber-JVM. You will have to add the 
